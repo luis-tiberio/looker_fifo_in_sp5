@@ -24,7 +24,7 @@ jobs:
       - name: Rodar Script de Atualização
         env:
           LOOKER_COOKIES: ${{ secrets.LOOKER_COOKIES }}
-        run: python update_looker.py
+        run: python print_looker.py
 
       - name: Upload do Print (Evidência)
         uses: actions/upload-artifact@v4
