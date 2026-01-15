@@ -1,0 +1,34 @@
+name: FIFO INBOUND SP5
+
+on:
+  workflow_dispatch: # Permite rodar manualmente clicando num botão
+
+jobs:
+  refresh_looker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Instalar dependências
+        run: |
+          pip install playwright
+          playwright install chromium
+
+      - name: Rodar Script de Atualização
+        env:
+          LOOKER_COOKIES: ${{ secrets.LOOKER_COOKIES }}
+        run: python update_looker.py
+
+      - name: Upload do Print (Evidência)
+        uses: actions/upload-artifact@v4
+        with:
+          name: comprovante-atualizacao
+          path: looker_evidence.png
+          retention-days: 1
